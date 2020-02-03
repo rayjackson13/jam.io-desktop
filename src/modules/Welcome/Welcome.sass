@@ -1,0 +1,72 @@
+$title: 36px
+$desc: 24px
+$text: 16px
+$gap: 16px
+    
+.welcome
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    background-color: #2e2e2e
+    height: 100vh
+    min-height: 400px
+    color: #ffffff
+    font-size: $text
+
+    &__title
+        font-size: $title
+        color: #ffffff
+        margin: 0
+        margin-bottom: $gap
+
+    &__desc
+        font-size: $desc
+        color: #fafafa
+        margin-bottom: 4 * $gap
+
+    &__option
+        background: 0
+        color: #2e2e2e
+        font-size: $text
+        line-height: 1
+        padding: 24px 20px
+        min-width: 200px
+        border: 2px solid #ffffff
+        border-radius: 8px
+        cursor: pointer
+        font-weight: 500
+        background-color: #ffffff
+        box-shadow: 1px 1px 4px rgba(0,0,0,.25)
+
+        &:hover
+            box-shadow: 2px 4px 16px rgba(0,0,0,.55)
+            transform: translateY(-4px)
+
+        &-text
+            display: block
+            padding-top: 8px
+
+        &-wrap
+            display: flex
+            margin-bottom: 4 * $gap
+            justify-content: center
+            align-items: center
+
+        &-sep
+            padding: 0 32px
+            line-height: 1
+            opacity: 0.25
+            text-transform: uppercase
+            position: relative
+            &::before, &::after
+                content: ''
+                position: absolute
+                top: calc(50% - 1px)
+                left: 4px
+                height: 2px
+                width: 24px
+                background-color: #ffffff
+            &::after
+                left: auto
+                right: 4px
