@@ -1,7 +1,11 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const url = require('url');
 const path = require('path');
-const { validateProject, createTempProject } = require('./helpers/projects');
+const { 
+  validateProject, 
+  createTempProject,
+  listProjectFiles 
+} = require('./helpers/projects');
 
 let mainWindow;
 
@@ -73,4 +77,11 @@ ipcMain.on('create-project', event => {
     .then(result => {
       event.sender.send('create-project-status', result);
     })
-})
+});
+
+ipcMain.on('list-files', (event, folder) => {
+  listProjectFiles(folder)
+    .then(result => {
+      event.sender.send('list-files-response', result);
+    });
+});

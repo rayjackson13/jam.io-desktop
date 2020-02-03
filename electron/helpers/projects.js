@@ -1,7 +1,17 @@
 const fs = require('fs');
 const temp = require('temp');
 const path = require('path');
-const { ncp } = require('ncp')
+const { ncp } = require('ncp');
+
+//TODO: fix function
+const generateFileTree = async directory => {
+  const dirents = fs.readdirSync(directory, { withFileTypes: true });
+  const files = await Promise.all(dirents.map((dirent) => {
+    const res = path.resolve(directory, dirent.map);
+    return dirent.isDirectory() ? generateFileTree(res) : res;
+  }));
+  return Array.prototype.concat(...files)
+}
 
 module.exports = {
   validateProject: (folders) => {
@@ -29,6 +39,13 @@ module.exports = {
           resolve(dirPath);
         })
       })
+    });
+  },
+  listProjectFiles: path => {
+    return new Promise(resolve => {
+      generateFileTree(path)
+        .then(files => resolve(files))
+        .catch(err => resolve(err));
     });
   }
 }

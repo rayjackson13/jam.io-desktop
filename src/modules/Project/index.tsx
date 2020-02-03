@@ -1,7 +1,7 @@
 import React from 'react';
 import FileTree from 'ui/FileTree';
 import { ProjectData } from 'typed/project'
-import { createMenu, getProjectData } from './helper';
+import { createMenu, getProjectData, listProjectFiles } from './helper';
 
 class ProjectWindow extends React.Component {
     state = {
@@ -11,10 +11,12 @@ class ProjectWindow extends React.Component {
     componentDidMount() {
         createMenu();
         getProjectData()
-            .then((data: unknown) => {
-                this.setState({
-                    data
-                });
+            .then((data: any) => {
+                console.log(data);
+                listProjectFiles(data.folder)
+                    .then((files:any) => {
+                        console.log('files:',files)
+                    });
             });
     }
 

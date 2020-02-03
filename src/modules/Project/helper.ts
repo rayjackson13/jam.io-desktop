@@ -21,3 +21,13 @@ export const getProjectData = () => {
         });
     });
 }
+
+export const listProjectFiles = (folder: string) => {
+    return new Promise(resolve => {
+        ipcRenderer.send('list-files', folder);
+        ipcRenderer.on('list-files-response', (event: any, files: Array<string>) => {
+            console.log(files);
+            resolve(files);
+        });
+    });
+};

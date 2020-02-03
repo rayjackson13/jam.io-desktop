@@ -50,6 +50,10 @@ export default [
         ]
     },
     {
+        label: 'Edit',
+        role: 'editMenu'
+    },
+    {
         label: 'View',
         submenu: [
             {
