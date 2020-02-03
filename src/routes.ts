@@ -1,4 +1,5 @@
-import Welcome from './modules/Welcome'
+import Welcome from './modules/Welcome';
+import Project from './modules/Project';
 
 export default [
   {
@@ -6,5 +7,10 @@ export default [
     exact: true,
     pageTitle: 'Welcome',
     component: Welcome
+  },
+  {
+    path: '/project',
+    pageTitle: 'Project',
+    component: Project
   }
 ];

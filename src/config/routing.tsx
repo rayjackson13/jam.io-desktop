@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 interface LocalRoute {
     component: React.ComponentType,
     path: string,
-    exact: boolean
+    exact?: boolean
 }
 
 const renderComponent = (route: LocalRoute, props: any) => (

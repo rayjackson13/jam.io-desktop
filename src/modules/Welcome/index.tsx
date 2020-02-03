@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'ui/Modal';
 import { ReactComponent as NewIcon } from 'assets/svg/joystick.svg';
 import { ReactComponent as OpenIcon } from 'assets/svg/open.svg';
-import { openFolder, createProject } from './helper';
+import { openFolder, createProject, openProjectWindow, createMenu } from './helper';
 import './Welcome.sass';
 
 class Welcome extends React.Component {
@@ -10,12 +10,15 @@ class Welcome extends React.Component {
         error: null
     };
 
+    componentDidMount() {
+        createMenu(this);
+    }
+
     onFolderLoaded = (files: Array<string>) => {
         if (!files || !files.length) {
             return;
         }
-
-        console.log(files);
+        openProjectWindow();
     };
 
     onFolderError = () => { 
@@ -25,13 +28,11 @@ class Welcome extends React.Component {
     };
 
     resetErrors = () => {
-        this.setState({
-            error: null
-        });
+        this.setState({ error: null });
     };
 
     onProjectCreated = (status: string) => {
-        console.log('project created', status);
+        openProjectWindow();
     }
 
     render() {

@@ -13,6 +13,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({ 
     width: 800, 
     height: 600,
+    title: 'jam.io',
     webPreferences: {
       nodeIntegration: true
     }
