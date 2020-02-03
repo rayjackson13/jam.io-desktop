@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'ui/Modal';
 import { ReactComponent as NewIcon } from 'assets/svg/joystick.svg';
 import { ReactComponent as OpenIcon } from 'assets/svg/open.svg';
-import { openFolder } from './helper';
+import { openFolder, createProject } from './helper';
 import './Welcome.sass';
 
 class Welcome extends React.Component {
@@ -30,6 +30,10 @@ class Welcome extends React.Component {
         });
     };
 
+    onProjectCreated = (status: string) => {
+        console.log('project created', status);
+    }
+
     render() {
         const { error } = this.state;
         return (
@@ -54,6 +58,7 @@ class Welcome extends React.Component {
                         <button 
                             type="button" 
                             className="welcome__option"
+                            onClick={() => createProject(this.onProjectCreated)}
                         >
                             <NewIcon className="welcome__option-new" width={64} height={64} />
                             <span className="welcome__option-text">Create New Project</span>

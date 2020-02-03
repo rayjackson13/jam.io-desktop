@@ -1,6 +1,6 @@
 const { ipcRenderer } = window.require('electron');
 
-export const openFolder = (callback?: any, errCallback?: any) => {
+export const openFolder = (callback?: Function, errCallback?: Function) => {
     return new Promise(resolve => {
         ipcRenderer.send('open-folder-dialog');
         ipcRenderer.on('selected-file', (event: any, files: Array<string>) => {
@@ -15,5 +15,17 @@ export const openFolder = (callback?: any, errCallback?: any) => {
             }
             resolve(null);
         })
+    });
+};
+
+export const createProject = (callback?: Function) => {
+    return new Promise(resolve => {
+        ipcRenderer.send('create-project');
+        ipcRenderer.on('create-project-status', (event: any, status: string) => {
+            if (callback) {
+                callback(status);
+            }
+            resolve(status);
+        });
     });
 };

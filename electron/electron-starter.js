@@ -2,7 +2,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const url = require('url');
 const path = require('path');
-const fs = require('fs');
+const { validateProject, createTempProject } = require('./helpers/projects');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -29,7 +29,7 @@ function createWindow() {
   const startUrl =
     process.env.ELECTRON_START_URL ||
     url.format({
-      pathname: path.join(__dirname, '/../build/index.html'),
+      pathname: path.join(__dirname, '/../../build/index.html'),
       protocol: 'file:',
       slashes: true
     });
@@ -79,7 +79,7 @@ ipcMain.on('open-folder-dialog', function (event) {
   })
     .then(result => {
       const folders = result.filePaths;
-      validateFolder(folders).then(validFolder => {
+      validateProject(folders).then(validFolder => {
         if (validFolder) {
           event.sender.send('selected-file', validFolder);
           return;
@@ -89,16 +89,9 @@ ipcMain.on('open-folder-dialog', function (event) {
     });
 });
 
-function validateFolder(folders) {
-  return new Promise(resolve => {
-    if (!folders || !folders.length) {
-      resolve(null);
-    }
-
-    const folder = folders[0];
-    fs.readdir(folder, function(err, items) {
-      const isValid = items.find(val => val.match('.project.jam'));
-      resolve(isValid ? folder : null);
-    });
-  });
-}
+ipcMain.on('create-project', event => {
+  createTempProject()
+    .then(result => {
+      event.sender.send('create-project-status', result);
+    })
+})
