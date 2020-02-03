@@ -79,18 +79,26 @@ ipcMain.on('open-folder-dialog', function (event) {
   })
     .then(result => {
       const folders = result.filePaths;
-      validateFolder(folders);
-      event.sender.send('selected-file', );
+      validateFolder(folders).then(validFolder => {
+        if (validFolder) {
+          event.sender.send('selected-file', validFolder);
+          return;
+        }
+        event.sender.send('selected-file-error', null);
+      });
     });
 });
 
 function validateFolder(folders) {
-  if (!folders || !folders.length) {
-    return false;
-  }
+  return new Promise(resolve => {
+    if (!folders || !folders.length) {
+      resolve(null);
+    }
 
-  const folder = folders[0];
-  fs.readdir(folder, function(err, items) {
-    return items.find(val => val.match('.project.jam'));
-  })
+    const folder = folders[0];
+    fs.readdir(folder, function(err, items) {
+      const isValid = items.find(val => val.match('.project.jam'));
+      resolve(isValid ? folder : null);
+    });
+  });
 }

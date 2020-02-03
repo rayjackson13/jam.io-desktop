@@ -1,0 +1,35 @@
+.dialog
+    position: absolute
+    left: 15%
+    right: 15%
+    top: 50%
+    transform: translateY(-250%)
+    opacity: 0
+    min-height: 50px
+    background-color: #2e2e2e
+    color: #ffffff
+    border: 2px solid #ffffff
+    padding: 25px
+    border-radius: 16px
+    box-shadow: 2px 2px 6px rgba(0,0,0,.35)
+    transition: all .25s
+    pointer-events: none
+    
+.modal
+    position: absolute
+    width: 100%
+    height: 100%
+    background-color: rgba(#000000, .25)
+    opacity: 0
+    pointer-events: none
+    transition: all .25s
+    z-index: 1
+
+    &--visible
+        opacity: 1
+        pointer-events: all
+
+        .dialog
+            transform: translateY(-50%)
+            opacity: 1
+            pointer-events: all

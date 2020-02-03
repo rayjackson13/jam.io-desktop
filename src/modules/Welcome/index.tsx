@@ -1,10 +1,15 @@
 import React from 'react';
+import Modal from 'ui/Modal';
 import { ReactComponent as NewIcon } from 'assets/svg/joystick.svg';
 import { ReactComponent as OpenIcon } from 'assets/svg/open.svg';
 import { openFolder } from './helper';
 import './Welcome.sass';
 
 class Welcome extends React.Component {
+    state = {
+        error: null
+    };
+
     onFolderLoaded = (files: Array<string>) => {
         if (!files || !files.length) {
             return;
@@ -13,10 +18,36 @@ class Welcome extends React.Component {
         console.log(files);
     };
 
+    onFolderError = () => { 
+        this.setState({
+            error: 'This folder doesn\'t contain any game data.'
+        });
+    };
+
+    resetErrors = () => {
+        this.setState({
+            error: null
+        });
+    };
+
     render() {
+        const { error } = this.state;
         return (
             <div className="app-wrap">
                 <main className="welcome">
+                    <Modal active={!!error}>
+                        {error && (
+                            <div className="welcome-error">
+                                <p className="welcome-error__message">{error}</p>
+                                <button 
+                                    className="welcome-error__button"
+                                    onClick={this.resetErrors}
+                                >
+                                    Got it
+                                </button>
+                            </div>
+                        )}
+                    </Modal>
                     <h2 className="welcome__title">welcome to jam.io</h2>
                     <p className="welcome__desc">here you can:</p>
                     <div className="welcome__option-wrap">
@@ -31,7 +62,7 @@ class Welcome extends React.Component {
                         <button 
                             type="button" 
                             className="welcome__option"
-                            onClick={() => openFolder(this.onFolderLoaded)}
+                            onClick={() => openFolder(this.onFolderLoaded, this.onFolderError)}
                         >
                             <OpenIcon className="welcome__option-open" width={64} height={64} />
                             <span className="welcome__option-text">Open Existing Project</span>
