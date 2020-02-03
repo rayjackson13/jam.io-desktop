@@ -6,6 +6,17 @@ declare global {
     }
 }
 
+const showMessageBox = () => {
+    const { dialog } = remote;
+    const currentWindow = remote.getCurrentWindow();
+    dialog.showMessageBoxSync(currentWindow, {
+        type: 'error',
+        buttons: [ 'OK' ],
+        title: 'No Project Found',
+        message: 'The folder you selected doesn\'t contain a valid jam.io project.'
+    })
+}
+
 export const openFolder = (errCallback?: Function) => {
     return new Promise(resolve => {
         ipcRenderer.send('open-folder-dialog');
@@ -17,6 +28,8 @@ export const openFolder = (errCallback?: Function) => {
             if (errCallback) {
                 errCallback();
             }
+
+            showMessageBox();
             resolve();
         })
     });
@@ -53,8 +66,11 @@ export const openProjectWindow = () => {
     projectWindow.webContents.openDevTools();
     projectWindow.once('ready-to-show', () => {
         projectWindow.show();
-        closeWindow();
+        currentWindow.hide();
     });
+    projectWindow.on('closed', () => {
+        currentWindow.show();
+    })
 };
 
 export const closeWindow = () => {

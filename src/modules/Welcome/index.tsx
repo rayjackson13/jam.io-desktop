@@ -3,51 +3,22 @@ import {
     openFolder, 
     createProject 
 } from 'helpers/project';
-import Modal from 'ui/Modal';
 import { ReactComponent as NewIcon } from 'assets/svg/joystick.svg';
 import { ReactComponent as OpenIcon } from 'assets/svg/open.svg';
 import { createMenu } from './helper';
 import './Welcome.sass';
 
 class Welcome extends React.Component {
-    state = {
-        error: null
-    };
-
     componentDidMount() {
-        createMenu(this);
+        createMenu();
     }
 
-    onFolderError = () => { 
-        this.setState({
-            error: 'This folder doesn\'t contain any game data.'
-        });
-    };
-
-    resetErrors = () => {
-        this.setState({ error: null });
-    };
-
     render() {
-        const { error } = this.state;
         return (
             <div className="app-wrap">
                 <main className="welcome">
                     <div className="welcome__container">
                         <div className="welcome__wrap">
-                            <Modal active={!!error}>
-                                {error && (
-                                    <div className="welcome-error">
-                                        <p className="welcome-error__message">{error}</p>
-                                        <button 
-                                            className="welcome-error__button"
-                                            onClick={this.resetErrors}
-                                        >
-                                            Got it
-                                        </button>
-                                    </div>
-                                )}
-                            </Modal>
                             <h2 className="welcome__title">welcome to jam.io</h2>
                             <p className="welcome__desc">here you can:</p>
                             <div className="welcome__option-wrap">
@@ -63,7 +34,7 @@ class Welcome extends React.Component {
                                 <button 
                                     type="button" 
                                     className="welcome__option"
-                                    onClick={() => openFolder(this.onFolderError)}
+                                    onClick={() => openFolder()}
                                 >
                                     <OpenIcon className="welcome__option-open" />
                                     <span className="welcome__option-text">Open Existing Project</span>

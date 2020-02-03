@@ -3,7 +3,7 @@ import { createMenu } from './helper';
 
 class ProjectWindow extends React.Component {
     componentDidMount() {
-        createMenu(this);
+        createMenu();
     }
 
     render() {

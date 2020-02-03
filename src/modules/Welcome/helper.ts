@@ -1,8 +1,4 @@
-import { 
-    openFolder,
-    createProject,
-    closeWindow
-} from 'helpers/project';
+import welcomeTemplate from 'menu/welcome';
 const { remote } = window.require('electron');
 
 declare global {
@@ -11,48 +7,8 @@ declare global {
     }
 }
 
-export const createMenu = (context: any) => {
+export const createMenu = () => {
     const { Menu } = remote;
-    const menu = Menu.buildFromTemplate([
-        {
-            label: 'jam.io',
-            submenu: [
-                {
-                    label: 'Quit',
-                    accelerator: 'CmdOrCtrl+Q',
-                    click: closeWindow
-                }
-            ]
-        },
-        {
-            label: 'Projects',
-            submenu: [
-                {
-                    label: 'New Project',
-                    accelerator: 'CmdOrCtrl+N',
-                    click: () => {
-                        createProject();
-                    }
-                },
-                {
-                    label: 'Open Folder',
-                    accelerator: 'CmdOrCtrl+O',
-                    click: () => {
-                        openFolder();
-                    }
-                }
-            ]
-        },
-        {
-            label: 'Window',
-            submenu: [
-                {
-                    label: 'Close Window',
-                    accelerator: 'CmdOrCtrl+W',
-                    click: closeWindow
-                }
-            ]
-        }
-    ]);
+    const menu = Menu.buildFromTemplate(welcomeTemplate);
     Menu.setApplicationMenu(menu);
 }
