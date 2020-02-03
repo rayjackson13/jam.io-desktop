@@ -1,3 +1,4 @@
+import { ProjectData } from 'typed/project';
 const { ipcRenderer, remote } = window.require('electron');
 
 declare global {
@@ -38,17 +39,17 @@ export const openFolder = (errCallback?: Function) => {
 export const createProject = (callback?: Function) => {
     return new Promise(resolve => {
         ipcRenderer.send('create-project');
-        ipcRenderer.on('create-project-status', (event: any, status: string) => {
+        ipcRenderer.on('create-project-status', (event: any, folder: string) => {
             if (callback) {
-                callback(status);
+                callback(folder);
             }
-            openProjectWindow();
-            resolve(status);
+            openProjectWindow({folder: folder});
+            resolve(folder);
         });
     });
 };
 
-export const openProjectWindow = () => {
+export const openProjectWindow = (data?: ProjectData) => {
     const currentWindow = remote.getCurrentWindow();
     const url = currentWindow.webContents.getURL();
     const BrowserWindow = remote.BrowserWindow;
@@ -68,6 +69,9 @@ export const openProjectWindow = () => {
         projectWindow.show();
         currentWindow.hide();
     });
+    projectWindow.once('show', () => {
+        projectWindow.webContents.send('get-project-data', data || {})
+    })
     projectWindow.on('closed', () => {
         currentWindow.show();
     })

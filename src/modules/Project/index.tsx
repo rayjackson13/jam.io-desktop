@@ -1,16 +1,33 @@
 import React from 'react';
-import { createMenu } from './helper';
+import FileTree from 'ui/FileTree';
+import { ProjectData } from 'typed/project'
+import { createMenu, getProjectData } from './helper';
 
 class ProjectWindow extends React.Component {
+    state = {
+        data: null
+    };
+ 
     componentDidMount() {
         createMenu();
+        getProjectData()
+            .then((data: unknown) => {
+                this.setState({
+                    data
+                });
+            });
     }
 
     render() {
+        console.log(this.state);
         return (
-            <div className="app-wrap">
-                <main className="projects"></main>
-            </div>
+            <main className="main">
+                <div className="container">
+                    <div className="main-wrap">
+                        <FileTree />
+                    </div>
+                </div>
+            </main>
         );
     };
 };
