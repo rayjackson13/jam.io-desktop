@@ -1,10 +1,15 @@
 import React from 'react';
+import { createMenu } from './helper';
 
 class ProjectWindow extends React.Component {
+    componentDidMount() {
+        createMenu(this);
+    }
+
     render() {
         return (
-            <div>
-                This is project window.
+            <div className="app-wrap">
+                <main className="projects"></main>
             </div>
         );
     };

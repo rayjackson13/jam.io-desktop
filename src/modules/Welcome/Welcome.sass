@@ -1,3 +1,5 @@
+@import '../../styles/_functions'
+    
 $title: 36px
 $desc: 24px
 $text: 16px
@@ -5,57 +7,92 @@ $gap: 16px
     
 .welcome
     position: relative
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
     background-color: #2e2e2e
-    height: 100vh
-    min-height: 400px
     color: #ffffff
     font-size: $text
+
+    &__container
+        padding: 0 20px
+
+    &__wrap
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        height: 100vh
+        min-height: 400px
 
     &__title
         font-size: $title
         color: #ffffff
         margin: 0
         margin-bottom: $gap
+        text-align: center
 
     &__desc
         font-size: $desc
-        color: #fafafa
+        color: #a2a2a2
+        font-weight: 300
         margin-bottom: 4 * $gap
+
+    &__copy
+        font-size: $text
+        color: #a2a2a2
+        text-align: center
 
     &__option
         background: 0
         color: #2e2e2e
         font-size: $text
         line-height: 1
-        padding: 24px 20px
-        min-width: 200px
+        padding: 10px 20px
         border: 2px solid #ffffff
         border-radius: 8px
         cursor: pointer
         font-weight: 500
         background-color: #ffffff
         box-shadow: 1px 1px 4px rgba(0,0,0,.25)
+        min-width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        @include respond-width(desktop)
+            min-width: 200px
+            padding: 24px 20px
+            flex-direction: column
 
         &:hover
             box-shadow: 2px 4px 16px rgba(0,0,0,.55)
-            transform: translateY(-4px)
+            transform: translateX(4px)
+            @include respond-width(desktop)
+                transform: translateY(-4px)
+
+        & > svg
+            width: 32px
+            height: 32px
+            margin-right: 16px
+            margin-bottom: 0
+            @include respond-width(desktop)
+                width: 64px
+                height: 64px
+                margin-right: 0
+                margin-bottom: 8px
 
         &-text
             display: block
-            padding-top: 8px
 
         &-wrap
+            width: 100%
             display: flex
+            flex-direction: column
             margin-bottom: 4 * $gap
             justify-content: center
             align-items: center
+            @include respond-width(desktop)
+                flex-direction: row
 
         &-sep
-            padding: 0 32px
+            padding: 12px 32px
             line-height: 1
             opacity: 0.25
             text-transform: uppercase

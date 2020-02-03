@@ -1,5 +1,6 @@
 body 
   margin: 0
+  min-width: 400px
   font-family: 'Roboto', Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -15,8 +16,11 @@ button
   border: 0
   background: 0
   cursor: pointer
-  transition: all .25s
+  transition: transform .25s, background-color .25s, color .25s
   outline: 0
   &:hover
     outline: 0
+
+@import './vars'
+@import './functions'
 

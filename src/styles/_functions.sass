@@ -1,0 +1,9 @@
+@import './vars'
+    
+@mixin respond-width($media)
+    @if $media == tiny
+        @media only screen and (min-width: 0)
+            @content
+    @if $media == desktop
+        @media only screen and (min-width: $desktop-min)
+            @content
